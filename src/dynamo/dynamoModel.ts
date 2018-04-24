@@ -12,7 +12,8 @@ export interface DynamoModelOptions {
 }
 
 export class DynamoModel<ID, T> {
-    protected Model: any;
+    protected Model: any
+    private fields: string[]
     constructor(private options: DynamoModelOptions, dynamodb?: any) {
         this.Model = dynamo.define(options.name, {
             hashKey: options.hashKey,
@@ -22,6 +23,7 @@ export class DynamoModel<ID, T> {
             tableName: options.tableName,
             indexes: options.indexes,
         });
+        this.fields = Object.keys(options.schema);
         if (dynamodb) {
             this.Model.config({ dynamodb: dynamodb });
         }
@@ -135,8 +137,10 @@ export class DynamoModel<ID, T> {
     createOrUpdate(item: T): Promise<T> {
         return this.create(item)
             .catch(error => {
-                console.error("Unable to update item. Error JSON:", JSON.stringify(error, null, 2));
-                return this.update({ item });
+                if (error.code === 'ConditionalCheckFailedException') {
+                    return this.update({ item });
+                }
+                return Promise.reject(error);
             });
     }
 
@@ -214,10 +218,22 @@ export class DynamoModel<ID, T> {
     }
 
     protected beforeCreating(data: T): T {
-        return data;
+        return this.prepareData(data);
     }
 
     protected beforeUpdating(data: RepUpdateData<T>): RepUpdateData<T> {
+        data = { ...<any>data };
+        data.item = this.prepareData(data.item);
+        return data;
+    }
+
+    protected prepareData(data: T): T {
+        data = { ...<any>data };
+        for (let prop of Object.keys(data)) {
+            if (this.fields.indexOf(prop) < 0) {
+                delete (<any>data)[prop];
+            }
+        }
         return data;
     }
 }

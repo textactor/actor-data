@@ -9,6 +9,7 @@ export class ActorNameModel extends DynamoModel<string, ActorName> {
     }
 
     protected beforeCreating(data: ActorName): ActorName {
+        data = super.beforeCreating(data);
         const ts = Math.round(Date.now() / 1000);
         data.createdAt = data.createdAt || ts;
 
