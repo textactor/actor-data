@@ -16,7 +16,7 @@ export class DynamoModel<ID, T> {
     constructor(private options: DynamoModelOptions, dynamodb?: any) {
         this.Model = dynamo.define(options.name, {
             hashKey: options.hashKey,
-            rangeKey: options.hashKey,
+            rangeKey: options.rangeKey,
             timestamps: false,
             schema: options.schema,
             tableName: options.tableName,
