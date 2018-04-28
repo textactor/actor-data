@@ -22,6 +22,7 @@ export class ActorModel extends DynamoModel<string, Actor> {
 
     protected beforeUpdating(data: RepUpdateData<Actor>): RepUpdateData<Actor> {
         data = super.beforeUpdating(data);
+        delete data.item.createdAt;
         data.item.updatedAt = data.item.updatedAt || Math.round(Date.now() / 1000);
 
         return data;
@@ -47,7 +48,7 @@ const OPTIONS: DynamoModelOptions = {
         name: Joi.string().min(2).max(200).required(),
         abbr: Joi.string().min(1).max(50),
         wikiDataId: Joi.string().regex(WIKI_DATA_ID_REG),
-        type: Joi.valid('EVENT', 'ORG', 'PERSON', 'PLACE', 'PRODUCT').required(),
+        type: Joi.valid('EVENT', 'ORG', 'PERSON', 'PLACE', 'PRODUCT'),
         description: Joi.string().max(200),
         createdAt: Joi.number().integer().required(),
         updatedAt: Joi.number().integer().required(),
