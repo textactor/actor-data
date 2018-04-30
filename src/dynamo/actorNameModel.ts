@@ -1,7 +1,7 @@
 import { DynamoModel, DynamoModelOptions } from "./dynamoModel";
 import { ActorName } from "@textactor/actor-domain";
 import * as Joi from 'joi';
-import { LANG_REG, COUNTRY_REG, formatCultureString } from "../helpers";
+import { LANG_REG, COUNTRY_REG, formatLocaleString } from "../helpers";
 
 export class ActorNameModel extends DynamoModel<string, ActorName> {
     constructor(dynamodb?: any) {
@@ -13,14 +13,14 @@ export class ActorNameModel extends DynamoModel<string, ActorName> {
         const ts = Math.round(Date.now() / 1000);
         data.createdAt = data.createdAt || ts;
 
-        (<any>data).culture = formatCultureString(data.lang, data.country);
+        (<any>data).locale = formatLocaleString(data.lang, data.country);
 
         return data;
     }
 
     protected transformData(data: any): ActorName {
         if (data) {
-            delete data.culture;
+            delete data.locale;
         }
         return super.transformData(data);
     }
@@ -34,7 +34,7 @@ const OPTIONS: DynamoModelOptions = {
         id: Joi.string().min(16).max(40).required(),
         lang: Joi.string().regex(LANG_REG).required(),
         country: Joi.string().regex(COUNTRY_REG).required(),
-        culture: Joi.string().regex(/^[a-z]{2}_[a-z]{2}$/).required(),
+        locale: Joi.string().regex(/^[a-z]{2}_[a-z]{2}$/).required(),
         name: Joi.string().min(2).max(200).required(),
         actorId: Joi.string().max(40).required(),
         createdAt: Joi.number().integer().required(),
