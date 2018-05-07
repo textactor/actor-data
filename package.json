@@ -14,7 +14,9 @@
     "postversion": "git push --follow-tags",
     "prepublishOnly": "npm run tsc && npm run clean-test-code",
     "clean": "rimraf ./lib && rimraf ./types",
-    "clean-test-code": "rimraf ./lib/**/*.test.js && rimraf ./types/**/*.test.d.ts"
+    "clean-test-code": "rimraf ./lib/**/*.test.js && rimraf ./types/**/*.test.d.ts",
+    "dev": "yarn remove @textactor/domain && yarn remove @textactor/actor-domain && yarn link @textactor/domain && yarn link @textactor/actor-domain",
+    "prod": "yarn unlink @textactor/domain && yarn unlink @textactor/actor-domain && yarn add @textactor/domain && yarn add @textactor/actor-domain"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -42,7 +44,6 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "@textactor/actor-domain": "^0.1.1",
     "dynamodb": "^1.1.1",
     "joi": "^13.2.0"
   }
