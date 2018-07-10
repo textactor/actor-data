@@ -118,7 +118,7 @@ export class DynamoModel<ID, T extends { id: ID }> {
         return new Promise((resolve, reject) => {
             const params = formatParams();
             params.expected = {};
-            params.expected[this.options.hashKey] = (<any>data.id)[this.options.hashKey];
+            params.expected[this.options.hashKey] = data.id || (<any>data.set)[this.options.hashKey];
             if (this.options.rangeKey !== undefined) {
                 params.expected[this.options.rangeKey] = (<any>data.set)[this.options.rangeKey];
             }
@@ -218,16 +218,18 @@ export class DynamoModel<ID, T extends { id: ID }> {
     }
 
     protected beforeCreating(data: T): T {
-        return this.prepareData(data);
+        return this.prepareData(data) as T;
     }
 
     protected beforeUpdating(data: RepUpdateData<ID, T>): RepUpdateData<ID, T> {
-        data = { ...<any>data };
-        data.set = this.prepareData({ id: <any>data.id, ...<any>data.set });
+        data = { ...data };
+        if (data.set) {
+            data.set = this.prepareData(data.set);
+        }
         return data;
     }
 
-    protected prepareData(data: T): T {
+    protected prepareData(data: Partial<T>): Partial<T> {
         data = { ...<any>data };
         for (let prop of Object.keys(data)) {
             if (this.fields.indexOf(prop) < 0) {
