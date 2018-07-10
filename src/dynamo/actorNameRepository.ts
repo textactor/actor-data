@@ -1,6 +1,5 @@
 import { DynamoRepository } from "./dynamoRepository";
 import { ActorName, IActorNameRepository } from "@textactor/actor-domain";
-import { seriesPromise } from "@textactor/domain";
 
 export class ActorNameRepository extends DynamoRepository<string, ActorName> implements IActorNameRepository {
     getNamesByActorId(actorId: string): Promise<ActorName[]> {
@@ -11,12 +10,15 @@ export class ActorNameRepository extends DynamoRepository<string, ActorName> imp
             limit: 50,
         }).then(result => {
             if (!result) {
-                return null;
+                return [];
             }
-            return result.items;
+            return result.items || [];
         });
     }
-    addNames(names: ActorName[]): Promise<ActorName[]> {
-        return seriesPromise(names, name => this.model.createOrUpdate(name)).then(() => names);
+    async addNames(names: ActorName[]): Promise<ActorName[]> {
+        for (let name of names) {
+            await this.model.createOrUpdate(name)
+        }
+        return names;
     }
 }

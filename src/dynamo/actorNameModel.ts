@@ -37,6 +37,7 @@ const OPTIONS: DynamoModelOptions = {
         locale: Joi.string().regex(/^[a-z]{2}_[a-z]{2}$/).required(),
         name: Joi.string().min(2).max(200).required(),
         actorId: Joi.string().max(40).required(),
+        type: Joi.valid('WIKI', 'SAME').required(),
         createdAt: Joi.number().integer().required(),
     },
     indexes: [
@@ -45,7 +46,7 @@ const OPTIONS: DynamoModelOptions = {
             type: 'global',
             hashKey: 'actorId',
             rangeKey: 'createdAt',
-            projection: { NonKeyAttributes: ['name'], ProjectionType: 'INCLUDE' }
+            projection: { NonKeyAttributes: ['name', 'type'], ProjectionType: 'INCLUDE' }
         }
     ]
 }

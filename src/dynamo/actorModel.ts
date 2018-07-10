@@ -20,12 +20,14 @@ export class ActorModel extends DynamoModel<string, Actor> {
         return data;
     }
 
-    protected beforeUpdating(data: RepUpdateData<Actor>): RepUpdateData<Actor> {
+    protected beforeUpdating(data: RepUpdateData<string, Actor>): RepUpdateData<string, Actor> {
         data = super.beforeUpdating(data);
-        delete data.item.createdAt;
-        delete data.item.lang;
-        delete data.item.country;
-        data.item.updatedAt = data.item.updatedAt || Math.round(Date.now() / 1000);
+        if (data.set) {
+            delete data.set.createdAt;
+            delete data.set.lang;
+            delete data.set.country;
+            data.set.updatedAt = data.set.updatedAt || Math.round(Date.now() / 1000);
+        }
 
         return data;
     }
@@ -49,10 +51,11 @@ const OPTIONS: DynamoModelOptions = {
         locale: Joi.string().regex(/^[a-z]{2}_[a-z]{2}$/).required(),
         name: Joi.string().min(2).max(200).required(),
         abbr: Joi.string().min(1).max(50),
-        wikiDataId: Joi.string().regex(WIKI_DATA_ID_REG),
+        wikiDataId: Joi.string().regex(WIKI_DATA_ID_REG).required(),
         wikiPageTitle: Joi.string().min(2).max(200),
         type: Joi.valid('EVENT', 'ORG', 'PERSON', 'PLACE', 'PRODUCT', 'WORK'),
         description: Joi.string().max(200),
+        wikiCountLinks: Joi.number().integer().min(1).max(500).required(),
         createdAt: Joi.number().integer().required(),
         updatedAt: Joi.number().integer().required(),
     },
