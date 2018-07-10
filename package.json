@@ -1,6 +1,6 @@
 {
   "name": "@textactor/actor-data",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Actors data module",
   "main": "./lib/index.js",
   "types": "./types/index.d.ts",
@@ -42,6 +42,8 @@
     "typescript": "latest"
   },
   "dependencies": {
+    "@textactor/actor-domain": "^0.1.4",
+    "@textactor/domain": "^0.1.6",
     "dynamodb": "^1.1.1",
     "joi": "^13.2.0"
   }
