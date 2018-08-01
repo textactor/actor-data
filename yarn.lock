@@ -44,9 +44,9 @@
   dependencies:
     arrify "^1.0.1"
 
-"@textactor/actor-domain@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@textactor/actor-domain/-/actor-domain-0.1.4.tgz#d5faf65c958ac60e8d0aacc2bc369e1e7dc84fa6"
+"@textactor/actor-domain@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@textactor/actor-domain/-/actor-domain-0.1.6.tgz#ecf6c26da8135356979863073aa628cb496dfaf8"
   dependencies:
     "@textactor/domain" "^0.1.6"
     fast-array-diff "^0.2.0"
@@ -1851,8 +1851,8 @@ nan@^2.0.8, nan@^2.9.2:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
 
 nanoid@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-1.0.7.tgz#23857a9514ae8efb7374221b923a2b92be3f74f2"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-1.1.0.tgz#b18e806e1cdbfdbe030374d5cf08a48cbc80b474"
 
 ncp@~2.0.0:
   version "2.0.0"
@@ -2413,8 +2413,8 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
 shortid@^2.2.8:
-  version "2.2.11"
-  resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.11.tgz#a77896f086b0dae7fce1237e29232d2aeef5738e"
+  version "2.2.12"
+  resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.12.tgz#8e9a95ffbc671fff8f09e985dbc7874102b0cfd2"
   dependencies:
     nanoid "^1.0.7"
 
