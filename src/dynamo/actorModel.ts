@@ -50,6 +50,7 @@ const OPTIONS: DynamoModelOptions = {
         country: Joi.string().regex(COUNTRY_REG).required(),
         locale: Joi.string().regex(/^[a-z]{2}_[a-z]{2}$/).required(),
         name: Joi.string().min(2).max(200).required(),
+        commonName: Joi.string().min(2).max(200),
         abbr: Joi.string().min(1).max(50),
         wikiDataId: Joi.string().regex(WIKI_DATA_ID_REG).required(),
         wikiPageTitle: Joi.string().min(2).max(200),
