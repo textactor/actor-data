@@ -42,7 +42,7 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "@textactor/actor-domain": "^0.1.6",
+    "@textactor/actor-domain": "^0.1.7",
     "@textactor/domain": "^0.1.6",
     "dynamodb": "^1.1.1",
     "joi": "^13.2.0"
