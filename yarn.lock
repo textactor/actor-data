@@ -44,20 +44,19 @@
   dependencies:
     arrify "^1.0.1"
 
-"@textactor/actor-domain@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@textactor/actor-domain/-/actor-domain-0.1.7.tgz#e4553ac6093dd2d6e560a7b343fbdc9fcb219d1a"
+"@textactor/actor-domain@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@textactor/actor-domain/-/actor-domain-0.1.8.tgz#81ee9a687805ff346c75a395e7059632b77f2f6c"
   dependencies:
-    "@textactor/domain" "^0.1.6"
+    "@textactor/domain" "^0.1.7"
     fast-array-diff "^0.2.0"
     shortid "^2.2.8"
 
-"@textactor/domain@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@textactor/domain/-/domain-0.1.6.tgz#26ad1552eaad78c1f5e74997e3f8403c9a72ee34"
+"@textactor/domain@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@textactor/domain/-/domain-0.1.7.tgz#33d92a49e847cf534f90fb935df59a751ebc65c9"
   dependencies:
     atonic "^1.0.4"
-    slugify "^1.2.9"
     standard-text "^0.1.1"
 
 "@types/joi@^13.0.7":
@@ -2435,10 +2434,6 @@ slice-ansi@^1.0.0:
 slide@^1.1.5:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
-
-slugify@^1.2.9:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.3.0.tgz#787919259d28c825fbcae6da2e01c77a109793f6"
 
 sort-keys@^2.0.0:
   version "2.0.0"
