@@ -52,6 +52,7 @@ const OPTIONS: DynamoModelOptions = {
         name: Joi.string().min(2).max(200).required(),
         commonName: Joi.string().min(2).max(200),
         englishName: Joi.string().min(2).max(200),
+        countryCodes: Joi.array().items(Joi.string().regex(COUNTRY_REG).required()).unique().max(6),
         abbr: Joi.string().min(1).max(50),
         wikiDataId: Joi.string().regex(WIKI_DATA_ID_REG).required(),
         wikiPageTitle: Joi.string().min(2).max(200),
