@@ -1,8 +1,8 @@
 
-export { ActorModel } from './dynamo/actorModel';
-export { ActorNameModel } from './dynamo/actorNameModel';
+export { ActorModel } from './dynamo/actor-model';
+export { ActorNameModel } from './dynamo/actor-name-model';
 
-export { ActorRepository } from './dynamo/actorRepository';
-export { ActorNameRepository } from './dynamo/actorNameRepository';
+export { ActorRepository } from './dynamo/actor-repository';
+export { ActorNameRepository } from './dynamo/actor-name-repository';
 
-export { createTables } from './dynamo/createTables';
+export { createTables } from './dynamo/create-tables';

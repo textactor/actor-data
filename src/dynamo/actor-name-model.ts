@@ -1,4 +1,4 @@
-import { DynamoModel, DynamoModelOptions } from "./dynamoModel";
+import { DynamoModel, DynamoModelOptions } from "./dynamo-model";
 import { ActorName } from "@textactor/actor-domain";
 import * as Joi from 'joi';
 import { LANG_REG, COUNTRY_REG, formatLocaleString } from "../helpers";

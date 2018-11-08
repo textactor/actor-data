@@ -1,4 +1,4 @@
-import { DynamoRepository } from "./dynamoRepository";
+import { DynamoRepository } from "./dynamo-repository";
 import { ActorName, IActorNameRepository } from "@textactor/actor-domain";
 
 export class ActorNameRepository extends DynamoRepository<string, ActorName> implements IActorNameRepository {
