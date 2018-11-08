@@ -14,7 +14,7 @@ export class ActorNameModel extends DynamoModel<string, ActorName> {
         data.createdAt = data.createdAt || ts;
 
         const locale = (<any>data).locale = formatLocaleString(data.lang, data.country);
-        (<any>data).countWordsKey = `${locale}-${data.countWords}`;
+        (<any>data).countWordsKey = `${locale}_${data.countWords}`;
 
         return data;
     }
