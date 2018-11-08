@@ -13,7 +13,8 @@ export class ActorNameModel extends DynamoModel<string, ActorName> {
         const ts = Math.round(Date.now() / 1000);
         data.createdAt = data.createdAt || ts;
 
-        (<any>data).locale = formatLocaleString(data.lang, data.country);
+        const locale = (<any>data).locale = formatLocaleString(data.lang, data.country);
+        (<any>data).countWordsKey = `${locale}-${data.countWords}`;
 
         return data;
     }
@@ -21,6 +22,7 @@ export class ActorNameModel extends DynamoModel<string, ActorName> {
     protected transformData(data: any): ActorName {
         if (data) {
             delete data.locale;
+            delete data.countWordsKey;
         }
         return super.transformData(data);
     }
@@ -39,6 +41,8 @@ const OPTIONS: DynamoModelOptions = {
         actorId: Joi.string().max(40).required(),
         type: Joi.valid('WIKI', 'SAME').required(),
         createdAt: Joi.number().integer().required(),
+        countWords: Joi.number().integer().min(1).max(100).required(),
+        countWordsKey: Joi.string().regex(/^[a-z]{2}_[a-z]{2}_\d+$/).required(),
     },
     indexes: [
         {
