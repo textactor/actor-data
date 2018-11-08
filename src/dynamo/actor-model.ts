@@ -1,12 +1,14 @@
-import { DynamoModel, DynamoModelOptions } from "./dynamo-model";
+import { DynamoModel, DynamoModelOptions, ModelOptions, buildDynamoOptions } from "./dynamo-model";
 import { Actor } from "@textactor/actor-domain";
 import * as Joi from 'joi';
 import { LANG_REG, COUNTRY_REG, WIKI_DATA_ID_REG, formatLocaleString } from "../helpers";
 import { RepUpdateData } from "@textactor/domain";
 
 export class ActorModel extends DynamoModel<string, Actor> {
-    constructor(dynamodb?: any) {
-        super(OPTIONS, dynamodb);
+    constructor(options?: ModelOptions) {
+        options = options || {};
+
+        super(buildDynamoOptions(OPTIONS, options), options.dynamodb);
     }
 
     protected beforeCreating(data: Actor): Actor {
@@ -42,7 +44,7 @@ export class ActorModel extends DynamoModel<string, Actor> {
 
 const OPTIONS: DynamoModelOptions = {
     name: 'textactor:Actor',
-    tableName: 'textactor_Actors_v0',
+    tableName: 'textactor_actors_v1',
     hashKey: 'id',
     schema: {
         id: Joi.string().min(6).max(16).required(),

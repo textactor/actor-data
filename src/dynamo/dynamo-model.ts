@@ -2,6 +2,11 @@
 const dynamo = require('dynamodb');
 import { RepUpdateData } from "@textactor/domain";
 
+export interface ModelOptions {
+    dynamodb?: any
+    tableName?: string
+}
+
 export interface DynamoModelOptions {
     name: string
     tableName: string
@@ -238,6 +243,16 @@ export class DynamoModel<ID, T extends { id: ID }> {
         }
         return data;
     }
+}
+
+export function buildDynamoOptions(dynamoOptions: DynamoModelOptions, modelOptions: ModelOptions) {
+    dynamoOptions = { ...dynamoOptions };
+
+    if (modelOptions.tableName) {
+        dynamoOptions.tableName = modelOptions.tableName;
+    }
+
+    return dynamoOptions;
 }
 
 export type DynamoQueryResult<T> = {
