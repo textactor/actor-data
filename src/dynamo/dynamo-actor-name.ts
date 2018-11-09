@@ -15,7 +15,7 @@ export class DynamoActorNameItem extends DynamoItem<{ id: string }, ActorName> {
                 type: 'S'
             },
             name: 'actors_names',
-            tableName: `textactor_actors_names_${tableSuffix}`,
+            tableName: `textactor_actor_names_${tableSuffix}`,
             indexes: [
                 {
                     name: 'ActorIdIndex',
