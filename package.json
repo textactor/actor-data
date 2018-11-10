@@ -6,7 +6,7 @@
   "types": "./dest/index.d.ts",
   "scripts": {
     "pretest": "npm run clean && npm run tsc",
-    "test": "ava --no-cache --verbose dest/**/*.test.js",
+    "test": "ava --no-cache --verbose --serial dest/**/*.test.js",
     "posttest": "npm run clean-test-code",
     "tsc": "tsc",
     "tscw": "tsc -w",

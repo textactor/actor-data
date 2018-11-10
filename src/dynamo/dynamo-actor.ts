@@ -1,6 +1,6 @@
 import DynamoDB = require('aws-sdk/clients/dynamodb');
 import {
-    DynamoItem, ItemUpdateData,
+    DynamoItem,
 } from 'dynamo-item';
 
 import { Actor } from '@textactor/actor-domain';
@@ -31,20 +31,7 @@ export class DynamoActorItem extends DynamoItem<{ id: string }, Actor> {
     protected beforeCreate(data: Actor): Actor {
         data = super.beforeCreate(data);
 
-        const ts = Math.round(Date.now() / 1000);
-        data.createdAt = data.createdAt || ts;
-        data.updatedAt = data.createdAt || ts;
-
         (<any>data).locale = formatLocaleString(data.lang, data.country);
-
-        return data;
-    }
-
-    protected beforeUpdate(data: ItemUpdateData<Actor>) {
-        data = super.beforeUpdate(data);
-        if (data.set) {
-            data.set.updatedAt = data.set.updatedAt || Math.round(Date.now() / 1000);
-        }
 
         return data;
     }

@@ -1,9 +1,9 @@
 import DynamoDB = require('aws-sdk/clients/dynamodb');
 import {
-    DynamoItem, ItemUpdateData,
+    DynamoItem,
 } from 'dynamo-item';
 
-import { ActorName, ACTOR_NAME_UPDATE_FIELDS } from '@textactor/actor-domain';
+import { ActorName } from '@textactor/actor-domain';
 import { formatLocaleString } from '../helpers';
 import { Dictionary } from '@textactor/domain';
 
@@ -31,23 +31,9 @@ export class DynamoActorNameItem extends DynamoItem<{ id: string }, ActorName> {
     protected beforeCreate(data: ActorName): ActorName {
         data = super.beforeCreate(data);
 
-        const ts = Math.round(Date.now() / 1000);
-        data.createdAt = data.createdAt || ts;
-
         const locale = (<any>data).locale = formatLocaleString(data.lang, data.country);
         (<any>data).countWordsKey = `${locale}_${data.countWords}`;
 
-        return data;
-    }
-
-    protected beforeUpdate(data: ItemUpdateData<ActorName>) {
-        if (data.set) {
-            for (const field of Object.keys(data.set)) {
-                if (!ACTOR_NAME_UPDATE_FIELDS.includes(field)) {
-                    delete (<any>data.set)[field];
-                }
-            }
-        }
         return data;
     }
 

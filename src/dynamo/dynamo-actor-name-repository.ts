@@ -22,11 +22,20 @@ export class DynamoActorNameRepository extends DynamoRepository<ActorName> imple
         }
         return result.items || [];
     }
-    
+
     async addNames(names: ActorName[]): Promise<ActorName[]> {
         for (let name of names) {
-            await (<DynamoActorNameItem>this.item).createOrUpdate(name)
+            await this.put(name)
         }
         return names;
+    }
+
+    protected beforeCreate(data: ActorName): ActorName {
+        const ts = Math.round(Date.now() / 1000);
+        data.createdAt = data.createdAt || ts;
+
+        data = super.beforeCreate(data);
+
+        return data;
     }
 }

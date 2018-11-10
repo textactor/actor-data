@@ -70,25 +70,3 @@ test.serial('#create no duplicates', async t => {
 
     await t.throws(dynamoItem.create(inputItem1), /The conditional request failed/);
 })
-
-test.serial('#createOrUpdate', async t => {
-    const inputItem1: ActorName = {
-        id: 'f4365456f4564356f45cc',
-        name: 'Some Name',
-        country: 'us',
-        lang: 'en',
-        actorId: '123423d43fa',
-        countWords: 2,
-        createdAt: 23425435344,
-        type: ActorNameType.SAME,
-    };
-
-    let outputItem1 = await dynamoItem.create(inputItem1);
-
-    const inputItem2: ActorName = { ...inputItem1, type: ActorNameType.WIKI };
-
-    const outputItem2 = await dynamoItem.createOrUpdate(inputItem2);
-
-    t.is(outputItem2.id, outputItem1.id, 'same id');
-    t.is(outputItem2.type, ActorNameType.WIKI, 'updated type');
-})
