@@ -37,6 +37,7 @@
   "devDependencies": {
     "@types/node": "10.12.3",
     "ava": "^0.25.0",
+    "dynamodb-local": "^0.0.22",
     "rimraf": "^2.6.2",
     "typescript": "3.1.6"
   },

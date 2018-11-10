@@ -57,16 +57,4 @@ export class DynamoActorNameItem extends DynamoItem<{ id: string }, ActorName> {
 
         return super.toExternItem(data);
     }
-
-    async createOrUpdate(item: ActorName) {
-        try {
-            return this.create(item);
-        }
-        catch (error) {
-            if (error.code === 'ConditionalCheckFailedException') {
-                return this.update({ key: { id: item.id }, set: item });
-            }
-            return Promise.reject(error);
-        }
-    }
 }
