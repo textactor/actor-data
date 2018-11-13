@@ -3,7 +3,7 @@ import DynamoDB = require('aws-sdk/clients/dynamodb');
 import { Actor, ActorValidator, ActorRepository } from '@textactor/actor-domain';
 import { DynamoActorItem } from './dynamo-actor';
 import { DynamoRepository } from './dynamo-repository';
-import { RepositoryUpdateData } from '@textactor/domain';
+import { RepositoryUpdateData, unixTime } from '@textactor/domain';
 
 export class DynamoActorRepository extends DynamoRepository<Actor> implements ActorRepository {
     constructor(client: DynamoDB.DocumentClient, tableSuffix: string) {
@@ -11,8 +11,7 @@ export class DynamoActorRepository extends DynamoRepository<Actor> implements Ac
     }
 
     protected beforeCreate(data: Actor): Actor {
-        const ts = Math.round(Date.now() / 1000);
-        data.createdAt = data.createdAt || ts;
+        data.createdAt = data.createdAt || unixTime();
         data.updatedAt = data.updatedAt || data.createdAt;
 
         data = super.beforeCreate(data);

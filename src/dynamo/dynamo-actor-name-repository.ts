@@ -3,6 +3,7 @@ import DynamoDB = require('aws-sdk/clients/dynamodb');
 import { ActorName, ActorNameValidator, ActorNameRepository } from '@textactor/actor-domain';
 import { DynamoActorNameItem } from './dynamo-actor-name';
 import { DynamoRepository } from './dynamo-repository';
+import { unixTime } from '@textactor/domain';
 
 export class DynamoActorNameRepository extends DynamoRepository<ActorName> implements ActorNameRepository {
 
@@ -31,8 +32,8 @@ export class DynamoActorNameRepository extends DynamoRepository<ActorName> imple
     }
 
     protected beforeCreate(data: ActorName): ActorName {
-        const ts = Math.round(Date.now() / 1000);
-        data.createdAt = data.createdAt || ts;
+
+        data.createdAt = data.createdAt || unixTime();
 
         data = super.beforeCreate(data);
 
