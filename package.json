@@ -1,6 +1,6 @@
 {
   "name": "@textactor/actor-data",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Actors data module",
   "main": "./dest/index.js",
   "types": "./dest/index.d.ts",
