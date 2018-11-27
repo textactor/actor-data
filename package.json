@@ -42,7 +42,7 @@
     "typescript": "3.1.6"
   },
   "dependencies": {
-    "@textactor/actor-domain": "^0.2.0",
+    "@textactor/actor-domain": "^0.2.2",
     "@textactor/domain": "^0.2.0",
     "aws-sdk": "^2.354.0",
     "dynamo-item": "^0.1.1"

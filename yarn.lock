@@ -59,10 +59,10 @@
     pretty-ms "^0.2.1"
     text-table "^0.2.0"
 
-"@textactor/actor-domain@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@textactor/actor-domain/-/actor-domain-0.2.0.tgz#7187a2a078e1f8debc1f386c2d04934ca7cdd47f"
-  integrity sha512-9Za21si037SXVa6BOA+IcsPEYVxQpjG57pvoz1BCIufg9rdlBLBsYhBK1vevgX+BXPYKmi0hXb+CVDLS9GEnbQ==
+"@textactor/actor-domain@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@textactor/actor-domain/-/actor-domain-0.2.2.tgz#c0810764d4bae8a880f3b646dd81ae847a99b030"
+  integrity sha512-k3JTu6/VjeXXDjc+MDoS/pqm3C8P61APW40C9+XFRvkloLI45uA/gOUsT4hZ/UKvUfCVV80kDmQJAEx8+V+FJg==
   dependencies:
     "@textactor/domain" "^0.2.0"
     fast-array-diff "^0.2.0"
