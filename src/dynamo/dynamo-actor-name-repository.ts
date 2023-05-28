@@ -1,42 +1,50 @@
-import DynamoDB = require('aws-sdk/clients/dynamodb');
+import DynamoDB = require("aws-sdk/clients/dynamodb");
 
-import { ActorName, ActorNameValidator, ActorNameRepository } from '@textactor/actor-domain';
-import { DynamoActorNameItem } from './dynamo-actor-name';
-import { DynamoRepository } from './dynamo-repository';
-import { unixTime } from '@textactor/domain';
+import {
+  ActorName,
+  ActorNameValidator,
+  ActorNameRepository
+} from "@textactor/actor-domain";
+import { DynamoActorNameItem } from "./dynamo-actor-name";
+import { DynamoRepository } from "./dynamo-repository";
+import { unixTime } from "@textactor/domain";
 
-export class DynamoActorNameRepository extends DynamoRepository<ActorName> implements ActorNameRepository {
+export class DynamoActorNameRepository
+  extends DynamoRepository<ActorName>
+  implements ActorNameRepository
+{
+  constructor(client: DynamoDB.DocumentClient, tableSuffix: string) {
+    super(
+      new DynamoActorNameItem(client, tableSuffix),
+      new ActorNameValidator()
+    );
+  }
 
-    constructor(client: DynamoDB.DocumentClient, tableSuffix: string) {
-        super(new DynamoActorNameItem(client, tableSuffix), new ActorNameValidator());
+  async getNamesByActorId(actorId: string): Promise<ActorName[]> {
+    const result = await this.item.query({
+      hashKey: actorId,
+      order: "DESC",
+      index: "ActorIdIndex",
+      limit: 50
+    });
+    if (!result) {
+      return [];
     }
+    return result.items || [];
+  }
 
-    async getNamesByActorId(actorId: string): Promise<ActorName[]> {
-        const result = await this.item.query({
-            hashKey: actorId,
-            order: 'DESC',
-            index: 'ActorIdIndex',
-            limit: 50,
-        });
-        if (!result) {
-            return [];
-        }
-        return result.items || [];
+  async addNames(names: ActorName[]): Promise<ActorName[]> {
+    for (let name of names) {
+      await this.put(name);
     }
+    return names;
+  }
 
-    async addNames(names: ActorName[]): Promise<ActorName[]> {
-        for (let name of names) {
-            await this.put(name)
-        }
-        return names;
-    }
+  protected override beforeCreate(data: ActorName): ActorName {
+    data.createdAt = data.createdAt || unixTime();
 
-    protected beforeCreate(data: ActorName): ActorName {
+    data = super.beforeCreate(data);
 
-        data.createdAt = data.createdAt || unixTime();
-
-        data = super.beforeCreate(data);
-
-        return data;
-    }
+    return data;
+  }
 }

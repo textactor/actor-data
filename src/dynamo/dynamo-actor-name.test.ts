@@ -1,72 +1,71 @@
+import test from "ava";
+import { launch, stop } from "dynamodb-local";
+import DynamoDB = require("aws-sdk/clients/dynamodb");
+import { DynamoActorNameItem } from "./dynamo-actor-name";
+import { ActorName, ActorNameType } from "@textactor/actor-domain";
 
-import test from 'ava';
-import { launch, stop } from 'dynamodb-local';
-import DynamoDB = require('aws-sdk/clients/dynamodb');
-import { DynamoActorNameItem } from './dynamo-actor-name';
-import { ActorName, ActorNameType } from '@textactor/actor-domain';
-
-
-
-test.before('start dynamo', async t => {
-    await t.notThrows(launch(8000, null, ['-inMemory', '-sharedDb']));
-})
-
-test.after('top dynamo', async t => {
-    t.notThrows(() => stop(8000));
-})
-
-const client = new DynamoDB.DocumentClient({
-    region: "eu-central-1",
-    endpoint: "http://localhost:8000",
-    accessKeyId: 'ID',
-    secretAccessKey: 'Key',
+test.before("start dynamo", async (t) => {
+  await t.notThrows(launch(8000, null, ["-inMemory", "-sharedDb"]));
 });
 
-const dynamoItem = new DynamoActorNameItem(client, 'test');
+test.after("top dynamo", async (t) => {
+  t.notThrows(() => stop(8000));
+});
 
-test.beforeEach('createTable', async t => {
-    await t.notThrows(dynamoItem.createTable());
-})
+const client = new DynamoDB.DocumentClient({
+  region: "eu-central-1",
+  endpoint: "http://localhost:8000",
+  accessKeyId: "ID",
+  secretAccessKey: "Key"
+});
 
-test.afterEach('deleteTable', async t => {
-    await t.notThrows(dynamoItem.deleteTable());
-})
+const dynamoItem = new DynamoActorNameItem(client, "test");
 
+test.beforeEach("createTable", async (t) => {
+  await t.notThrows(dynamoItem.createTable());
+});
 
-test.serial('#create input=output', async t => {
-    const inputItem1: ActorName = {
-        id: 'f4365456f4564356f45',
-        name: 'Some Name',
-        country: 'us',
-        lang: 'en',
-        actorId: '123423d43f',
-        countWords: 2,
-        createdAt: 2342543534,
-        type: ActorNameType.SAME,
-    };
+test.afterEach("deleteTable", async (t) => {
+  await t.notThrows(dynamoItem.deleteTable());
+});
 
-    const outputItem1 = await dynamoItem.create(inputItem1);
+test.serial("#create input=output", async (t) => {
+  const inputItem1: ActorName = {
+    id: "f4365456f4564356f45",
+    name: "Some Name",
+    country: "us",
+    lang: "en",
+    actorId: "123423d43f",
+    countWords: 2,
+    createdAt: 2342543534,
+    type: ActorNameType.SAME
+  };
 
-    t.is(inputItem1.id, outputItem1.id, 'same id');
-    t.deepEqual(inputItem1, outputItem1, 'same object');
-})
+  const outputItem1 = await dynamoItem.create(inputItem1);
 
-test.serial('#create no duplicates', async t => {
-    const inputItem1: ActorName = {
-        id: 'f4365456f4564356f45',
-        name: 'Some Name',
-        country: 'us',
-        lang: 'en',
-        actorId: '123423d43f',
-        countWords: 2,
-        createdAt: 2342543534,
-        type: ActorNameType.SAME,
-    };
+  t.is(inputItem1.id, outputItem1.id, "same id");
+  t.deepEqual(inputItem1, outputItem1, "same object");
+});
 
-    const outputItem1 = await dynamoItem.create(inputItem1);
+test.serial("#create no duplicates", async (t) => {
+  const inputItem1: ActorName = {
+    id: "f4365456f4564356f45",
+    name: "Some Name",
+    country: "us",
+    lang: "en",
+    actorId: "123423d43f",
+    countWords: 2,
+    createdAt: 2342543534,
+    type: ActorNameType.SAME
+  };
 
-    t.is(inputItem1.id, outputItem1.id, 'same id');
-    t.deepEqual(inputItem1, outputItem1, 'same object');
+  const outputItem1 = await dynamoItem.create(inputItem1);
 
-    await t.throws(dynamoItem.create(inputItem1), /The conditional request failed/);
-})
+  t.is(inputItem1.id, outputItem1.id, "same id");
+  t.deepEqual(inputItem1, outputItem1, "same object");
+
+  await t.throws(
+    dynamoItem.create(inputItem1),
+    /The conditional request failed/
+  );
+});

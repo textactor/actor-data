@@ -1,5 +1,4 @@
-
 export {
-    ActorRepositoryBuilder,
-    ActorNameRepositoryBuilder,
-} from './repository-builder';
+  ActorRepositoryBuilder,
+  ActorNameRepositoryBuilder
+} from "./repository-builder";
